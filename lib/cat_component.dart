@@ -1,21 +1,23 @@
 import 'dart:async';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
+import 'package:flame_ext/flame_ext.dart';
 
-class CatComponent extends SpriteAnimationComponent  with HasGameRef{
+class CatComponent extends SpriteAnimationComponent with HasGameRef {
   CatComponent()
       : super(
           size: Vector2.all(64),
           anchor: Anchor.center,
-          scale: Vector2.all(2.0),
+          scale: Vector2.all(1.5),
         );
 
   @override
   FutureOr<void> onLoad() async {
     // Load the GIF as an image
-    final image = await Flame.images.load('cat_addon_energyforcemaster/cat2_base.png');
+    final image = await Flame.images.load('player/cat/cat_ani/sprite_base_addon.png');
 
     // Create the sprite sheet
     final spriteSheet = SpriteSheet(
@@ -23,12 +25,43 @@ class CatComponent extends SpriteAnimationComponent  with HasGameRef{
       srcSize: Vector2.all(64), // Adjust the frame size as needed
     );
 
-    animation = spriteSheet.createAnimation(row: 0, to: 12, stepTime: 0.12);
+    List<Sprite> sprites = spriteSheet.getRowSprites(row: 1, count: 8);
+
+    animation = SpriteAnimation.spriteList(
+      sprites,
+      stepTime: 0.12,
+      loop: true,
+    );
+    // Set the initial position to the center of the screen
+    position = gameRef.size / 2;
+    // Add a hitbox for collision detection
+    //add(RectangleHitbox()..debugMode = true);
   }
 
-  @override
-  void onGameResize(Vector2 size) {
-    super.onGameResize(size);
-    position = size / 2;
+  double speed = 200.0; // Pixels/ 秒
+
+  void move(double dt, Vector2 relativeDelta) {
+    Vector2 ds = relativeDelta * speed * dt;
+    position.add(ds);
   }
+
+  void updateDirection(Vector2 delta) {
+    if (delta.x > 0) {
+      // 向右移动
+      scale.x = 1.5;
+    } else if (delta.x < 0) {
+      // 向左移动
+      scale.x = -1.5;
+    }
+  }
+}
+
+enum CatAction {
+  idle,
+  walk,
+  run,
+  jump,
+  attack,
+  hurt,
+  die,
 }

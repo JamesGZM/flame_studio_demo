@@ -1,4 +1,3 @@
-
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +5,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/services.dart';
 
 import 'cat_component.dart';
+import 'components/monster/matchlock_bandit_component.dart';
 
 void main() async {
   await initializeFlame();
@@ -31,19 +31,30 @@ initializeFlame() async {
 }
 
 class StudioGame extends FlameGame {
-
   late final JoystickComponent joystick;
+  late final CatComponent player;
 
   @override
   Future<void> onLoad() async {
     final knobPaint = BasicPalette.white.withAlpha(150).paint();
     final backgroundPaint = BasicPalette.white.withAlpha(300).paint();
     joystick = JoystickComponent(
-      knob: CircleComponent(radius: 20, paint: knobPaint),
+      knob: CircleComponent(radius: 25, paint: knobPaint),
       background: CircleComponent(radius: 60, paint: backgroundPaint),
       margin: const EdgeInsets.only(left: 60, bottom: 40),
     );
     add(joystick);
-    await add(CatComponent());
+    player = CatComponent();
+    add(player);
+    add(MatchlockBanditComponent());
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    if (!joystick.delta.isZero()) {
+      player.move(dt, joystick.relativeDelta);
+      player.updateDirection(joystick.relativeDelta);
+    }
   }
 }

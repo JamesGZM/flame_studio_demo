@@ -161,6 +161,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.10.4"
+  flame_ext:
+    dependency: "direct main"
+    description:
+      path: "packages/flame_ext"
+      relative: true
+    source: path
+    version: "0.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
