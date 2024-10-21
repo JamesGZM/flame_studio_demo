@@ -34,6 +34,10 @@ class StudioGame extends FlameGame {
   late final JoystickComponent joystick;
   late final CatComponent player;
 
+  StudioGame() : super() {
+    images.prefix = '';
+  }
+
   @override
   Future<void> onLoad() async {
     final knobPaint = BasicPalette.white.withAlpha(150).paint();

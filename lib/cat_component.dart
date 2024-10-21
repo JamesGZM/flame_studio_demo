@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 import 'package:flame_ext/flame_ext.dart';
+import 'package:flame_studio_demo/gen/assets.gen.dart';
 
 class CatComponent extends SpriteAnimationComponent with HasGameRef {
   CatComponent()
@@ -17,7 +17,7 @@ class CatComponent extends SpriteAnimationComponent with HasGameRef {
   @override
   FutureOr<void> onLoad() async {
     // Load the GIF as an image
-    final image = await Flame.images.load('player/cat/cat_ani/sprite_base_addon.png');
+    final image = await Flame.images.load(Assets.images.player.cat.catAni.spriteBaseAddon.keyName);
 
     // Create the sprite sheet
     final spriteSheet = SpriteSheet(

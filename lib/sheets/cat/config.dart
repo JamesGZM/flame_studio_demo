@@ -1,5 +1,0 @@
-class CatConfig {
-
-  CatConfig._();
-
-}

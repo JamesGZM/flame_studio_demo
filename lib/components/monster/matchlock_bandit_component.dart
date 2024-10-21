@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
+import 'package:flame_studio_demo/gen/assets.gen.dart';
 
 /// 怪物-火铳盗贼组件
 class MatchlockBanditComponent extends SpriteAnimationComponent
@@ -17,8 +18,7 @@ class MatchlockBanditComponent extends SpriteAnimationComponent
 
   @override
   FutureOr<void> onLoad() async {
-    final image = await Flame.images.load(
-        'monster/strawhat_bandits/matchlock_bandit/matchlock_bandit_run.png');
+    final image = await Flame.images.load(Assets.images.monster.strawhatBandits.matchlockBandit.matchlockBanditRun.keyName);
 
     // Create the sprite sheet
     final spriteSheet = SpriteSheet(
